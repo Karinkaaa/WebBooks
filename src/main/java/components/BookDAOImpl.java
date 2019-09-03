@@ -1,6 +1,7 @@
-package db.dao;
+package components;
 
-import db.entity.Book;
+import dao.DAO;
+import exception.DAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDAOImpl implements IBookDAO {
+public class BookDAOImpl implements DAO<Book> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private DataSource dataSource;

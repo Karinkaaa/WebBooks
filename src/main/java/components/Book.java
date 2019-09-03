@@ -1,4 +1,4 @@
-package db.entity;
+package components;
 
 public class Book {
 

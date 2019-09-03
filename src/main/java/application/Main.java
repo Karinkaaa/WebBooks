@@ -1,7 +1,9 @@
-import db.dao.BookDAOImpl;
-import db.dao.ConnectionToDB;
-import db.dao.IBookDAO;
-import db.entity.Book;
+package application;
+
+import components.BookDAOImpl;
+import components.ConnectionToDB;
+import dao.DAO;
+import components.Book;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,7 +11,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        IBookDAO bookDao = new BookDAOImpl(new ConnectionToDB());
+        DAO<Book> bookDao = new BookDAOImpl(new ConnectionToDB());
         Scanner scanner = new Scanner(System.in);
         String bookName;
         long bookId;
