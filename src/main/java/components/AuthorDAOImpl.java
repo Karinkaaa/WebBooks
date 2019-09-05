@@ -1,9 +1,7 @@
 package components;
 
 import dao.AuthorDAO;
-import dao.DAO;
 import entities.Author;
-import entities.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,56 +10,52 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDAOImpl implements DAO<Book> {
-
+public class AuthorDAOImpl implements AuthorDAO<Author> {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private AuthorDAO<Author> authorDAO;
     private DataSource dataSource;
 
-    public BookDAOImpl(DataSource dataSource) {
+    public AuthorDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.authorDAO = new AuthorDAOImpl(dataSource);
     }
 
-    private void updateRelations(int bookId, int authorId) throws SQLException {
+    @Override
+    public List<Author> findByBookId(int id) throws SQLException {
 
-        String sql = "insert into Books_Authors(bookId, authorId) values ( ?, ? )";
+        List<Author> listOfAuthors = new ArrayList<>();
+        String sql = "select * from Authors where Authors.id in " +
+                "(select authorId from Books_Authors where bookId = ?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, bookId);
-            preparedStatement.setInt(2, authorId);
-            preparedStatement.execute();
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Author author = new Author(resultSet.getInt("id"), resultSet.getString("name"),
+                        resultSet.getString("surname"));
+                listOfAuthors.add(author);
+            }
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
-            throw ex;
         }
-    }
 
-    private void setRelations(Book book) throws SQLException {
-
-        List<Author> authors = book.getAuthors();
-        for (Author author : authors) {
-
-            if (author.getId() == null)
-                authorDAO.save(author);
-            updateRelations(book.getId(), author.getId());
-        }
+        return listOfAuthors;
     }
 
     @Override
-    public void save(Book obj) throws SQLException {
+    public void save(Author obj) throws SQLException {
 
-        String sql = "insert into Books(id, name) values ( ?, ? )";
+        String sql = "insert into Authors(id, name, surname) values ( ?, ?, ? )";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setObject(1, obj.getId());
             preparedStatement.setString(2, obj.getName());
+            preparedStatement.setString(3, obj.getSurname());
             preparedStatement.execute();
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -70,27 +64,24 @@ public class BookDAOImpl implements DAO<Book> {
                 else
                     throw new SQLException("Cannot generate id!");
             }
-            setRelations(obj);
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
-            throw ex;
         }
     }
 
     @Override
-    public void update(Book obj) throws SQLException {
+    public void update(Author obj) throws SQLException {
 
-        String sql = "update Books set name = ? where id = ?";
+        String sql = "update Authors set name = ?, surname = ? where id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, obj.getName());
-            preparedStatement.setInt(2, obj.getId());
+            preparedStatement.setString(2, obj.getSurname());
+            preparedStatement.setInt(3, obj.getId());
             preparedStatement.execute();
-
-            setRelations(obj);
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
@@ -98,10 +89,10 @@ public class BookDAOImpl implements DAO<Book> {
     }
 
     @Override
-    public int delete(Book obj) throws SQLException {
+    public int delete(Author obj) throws SQLException {
 
         int res = 0;
-        String sql = "delete from Books where id = ?";
+        String sql = "delete from Authors where id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -117,10 +108,10 @@ public class BookDAOImpl implements DAO<Book> {
     }
 
     @Override
-    public Book findById(long id) throws SQLException {
+    public Author findById(long id) throws SQLException {
 
-        Book book = null;
-        String sql = "select * from Books where id = ?";
+        Author author = null;
+        String sql = "select * from Authors where id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -131,37 +122,38 @@ public class BookDAOImpl implements DAO<Book> {
             ResultSet resultSet = preparedStatement.getResultSet();
 
             if (resultSet.next()) {
-                book = new Book(resultSet.getInt("id"), resultSet.getString("name"));
-                book.setAuthors(authorDAO.findByBookId(book.getId()));
+                author = new Author(resultSet.getInt("id"), resultSet.getString("name"),
+                        resultSet.getString("surname"));
             }
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
         }
 
-        return book;
+        return author;
     }
 
     @Override
-    public List<Book> getAll() throws SQLException {
+    public List<Author> getAll() throws SQLException {
 
-        List<Book> listOfBooks = new ArrayList<>();
-        String sql = "select * from Books";
+        List<Author> listOfAuthors = new ArrayList<>();
+        String sql = "select * from Authors";
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = statement.executeQuery(sql);
+
             while (resultSet.next()) {
-                Book book = new Book(resultSet.getInt("id"), resultSet.getString("name"));
-                book.setAuthors(authorDAO.findByBookId(book.getId()));
-                listOfBooks.add(book);
+                Author author = new Author(resultSet.getInt("id"), resultSet.getString("name"),
+                        resultSet.getString("surname"));
+                listOfAuthors.add(author);
             }
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
         }
 
-        return (listOfBooks.size() == 0) ? null : listOfBooks;
+        return listOfAuthors;
     }
 }

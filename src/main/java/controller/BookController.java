@@ -1,9 +1,9 @@
 package controller;
 
-import components.Book;
 import components.BookDAOImpl;
-import components.ConnectionToDB;
+import connect.ConnectionToDB;
 import dao.DAO;
+import entities.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -28,7 +29,7 @@ public class BookController {
 
     @ResponseBody
     @RequestMapping()
-    public String getAll() {
+    public String getAll() throws SQLException {
 
         logger.info("Method getAll()");
 
@@ -44,7 +45,7 @@ public class BookController {
 
     @ResponseBody
     @RequestMapping("/{id}")
-    public String find(@PathVariable("id") long id) {
+    public String find(@PathVariable("id") int id) throws SQLException {
 
         logger.info("Method find()");
 
@@ -56,7 +57,7 @@ public class BookController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
-    public String save(String name) {
+    public String save(String name) throws SQLException {
 
         logger.info("Method save()");
 
@@ -69,7 +70,7 @@ public class BookController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public String update(String name, @PathVariable("id") long id) {
+    public String update(String name, @PathVariable("id") int id) throws SQLException {
 
         logger.info("Method update()");
 
@@ -81,7 +82,7 @@ public class BookController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable("id") long id) {
+    public String delete(@PathVariable("id") int id) throws SQLException {
 
         logger.info("Method delete()");
 

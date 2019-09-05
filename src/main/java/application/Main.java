@@ -1,52 +1,71 @@
 package application;
 
 import components.BookDAOImpl;
-import components.ConnectionToDB;
+import connect.ConnectionToDB;
 import dao.DAO;
-import components.Book;
+import entities.Author;
+import entities.Book;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+
+        Logger logger = LoggerFactory.getLogger(Main.class.getName());
+        Scanner scanner = new Scanner(System.in);
 
         DAO<Book> bookDao = new BookDAOImpl(new ConnectionToDB());
-        Scanner scanner = new Scanner(System.in);
-        String bookName;
-        long bookId;
-        int action;
+        String name, surname;
+        int action, id;
 
         do {
-            System.out.println("\n\nMenu:");
-            System.out.println("[1] add book");
-            System.out.println("[2] show book from id");
-            System.out.println("[3] show all books");
-            System.out.println("[4] update book");
-            System.out.println("[5] delete book from id");
-            System.out.println("[0] exit");
-            System.out.print("\nEnter an action: ");
+            logger.info("\n\nMenu:");
+            logger.info("[1] add book");
+            logger.info("[2] show book from id");
+            logger.info("[3] show all books");
+            logger.info("[4] update book");
+            logger.info("[5] delete book from id");
+            logger.info("[0] exit");
+            logger.info("Enter an action: ");
             action = scanner.nextInt();
 
             if (action == 1) {
 
-                System.out.print("Enter the name of book: ");
-                bookName = scanner.next();
+                logger.info("Enter the name of book: ");
+                name = scanner.next();
 
                 Book book = new Book();
-                book.setName(bookName);
+                book.setName(name);
+
+                logger.info("Enter the count authors of book: ");
+                int count = scanner.nextInt();
+
+                for (int i = 0; i < count; i++) {
+
+                    logger.info("Enter the name of " + (i + 1) + "-th author: ");
+                    name = scanner.next();
+
+                    logger.info("Enter the surname of " + (i + 1) + "-th author: ");
+                    surname = scanner.next();
+
+                    book.setAuthor(new Author(name, surname));
+                }
 
                 bookDao.save(book);
 
             } else if (action == 2) {
 
-                System.out.print("Enter the id from book: ");
-                bookId = scanner.nextInt();
+                logger.info("Enter the id from book: ");
+                id = scanner.nextInt();
 
-                Book book = bookDao.findById(bookId);
+                Book book = bookDao.findById(id);
 
-                if (book != null) System.out.println(book);
-                else System.out.println("\nBook with ID " + bookId + " not found!");
+                if (book != null) logger.info(book.toString());
+                else logger.info("Book with ID " + id + " not found!");
 
             } else if (action == 3) {
 
@@ -54,35 +73,82 @@ public class Main {
 
                 if (list != null) {
                     for (Book book : list) {
-                        System.out.println(book);
+                        logger.info(book.toString());
                     }
                 } else {
-                    System.out.println("\nTable is empty...");
+                    logger.info("Table is empty...");
                 }
 
             } else if (action == 4) {
 
-                System.out.print("Enter the id of book: ");
-                bookId = scanner.nextInt();
+                logger.info("Enter the id of book: ");
+                id = scanner.nextInt();
 
-                System.out.print("Enter the new name for book: ");
-                bookName = scanner.next();
+                logger.info("Enter the new name for book: ");
+                name = scanner.next();
 
-                Book book = new Book(bookId, bookName);
+                Book book = new Book(id, name);
+                String choice;
+
+                if (book.getAuthors().size() == 0) {
+
+                    logger.info("Do you want to add authors? (y - yes, n - no)");
+                    choice = scanner.next();
+
+                    logger.info("How many?");
+                    int count = scanner.nextInt();
+
+                    if (choice.equals("y")) {
+
+                        for (int i = 0; i < count; i++) {
+                            logger.info("Enter the name of author: ");
+                            name = scanner.next();
+
+                            logger.info("Enter the surname of author: ");
+                            surname = scanner.next();
+
+                            book.setAuthor(new Author(name, surname));
+                        }
+                    }
+                } else {
+
+                    logger.info("Do you want to change authors? (y - yes, n - no)");
+                    choice = scanner.next();
+
+                    if (choice.equals("y")) {
+
+                        for (int i = 0; i < book.getAuthors().size(); i++) {
+
+                            logger.info(book.getAuthorById(i).toString());
+                            logger.info("Change this author? (y - yes, n - no)");
+                            choice = scanner.next();
+
+                            if (choice.equals("y")) {
+
+                                logger.info("Enter the new name of author: ");
+                                name = scanner.next();
+
+                                logger.info("Enter the new surname of author: ");
+                                surname = scanner.next();
+
+                                book.setAuthor(new Author(name, surname));
+                            }
+                        }
+                    }
+                }
+
                 bookDao.update(book);
 
             } else if (action == 5) {
 
-                System.out.print("Enter the id of deleting book: ");
-                bookId = scanner.nextInt();
+                logger.info("Enter the id of deleting book: ");
+                id = scanner.nextInt();
 
                 Book book = new Book();
-                book.setId(bookId);
+                book.setId(id);
 
                 int res = bookDao.delete(book);
-
-                if (res > 0) System.out.println(("\nBook deleted..."));
-                else System.out.println(("\nBook with ID " + book.getId() + " not found..."));
+                if (res > 0) logger.info(("Book deleted..."));
             }
 
         } while (action != 0);

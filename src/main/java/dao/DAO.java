@@ -1,18 +1,17 @@
 package dao;
 
-import exception.DAOException;
-
+import java.sql.SQLException;
 import java.util.List;
 
 public interface DAO<T> {
 
-    void save(T book) throws DAOException;
+    void save(T obj) throws SQLException;
 
-    void update(T book) throws DAOException;
+    void update(T obj) throws SQLException;
 
-    int delete(T book) throws DAOException;
+    int delete(T obj) throws SQLException;
 
-    T findById(long id) throws DAOException;
+    T findById(long id) throws SQLException;
 
-    List<T> getAll() throws DAOException;
+    List<T> getAll() throws SQLException;
 }
