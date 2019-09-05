@@ -11,20 +11,7 @@ public class ConnectionToDB implements DataSource {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-
-        try (Connection connection = getConnection();
-             Statement statement = connection.createStatement()) {
-
-            statement.executeUpdate("create table if not exists Books (" +
-                    "id mediumint not null auto_increment, " +
-                    "name varchar(30) not null, " +
-                    "primary key(id))");
-
-        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
