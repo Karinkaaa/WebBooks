@@ -1,9 +1,9 @@
 package controller;
 
-import components.BookDAOImpl;
+import components.AuthorDAOImpl;
 import connect.ConnectionToDB;
 import dao.DAO;
-import entities.Book;
+import entities.Author;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,15 +16,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Controller
-@RequestMapping("books")
-public class BookController {
+@RequestMapping("authors")
+public class AuthorController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-    private DAO<Book> bookDao = new BookDAOImpl(new ConnectionToDB());
+    private DAO<Author> authorDAO = new AuthorDAOImpl(new ConnectionToDB());
 
-    public BookController() {
-        logger.info("Book controller created...");
+    public AuthorController() {
+        logger.info("Author controller created...");
     }
 
     @ResponseBody
@@ -33,12 +33,12 @@ public class BookController {
 
         logger.info("Method getAll()");
 
-        List<Book> list = bookDao.getAll();
+        List<Author> list = authorDAO.getAll();
         if (list == null) return "DB is empty!";
 
         StringBuilder sb = new StringBuilder();
-        for (Book book : list)
-            sb.append(book.toString());
+        for (Author author : list)
+            sb.append(author.toString()).append("\n");
 
         return sb.toString();
     }
@@ -49,35 +49,36 @@ public class BookController {
 
         logger.info("Method find()");
 
-        Book book = bookDao.findById(id);
+        Author author = authorDAO.findById(id);
 
-        if (book != null) return book.toString();
-        return "Book is not found!";
+        if (author != null) return author.toString();
+        return "Author is not found!";
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
-    public String save(String name) throws SQLException {
+    public String save(String name, String surname) throws SQLException {
 
         logger.info("Method save()");
 
-        Book book = new Book();
-        book.setName(name);
-        bookDao.save(book);
+        Author author = new Author();
+        author.setName(name);
+        author.setSurname(surname);
 
-        return "Book saved!";
+        authorDAO.save(author);
+        return "Author saved!";
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public String update(String name, @PathVariable("id") int id) throws SQLException {
+    public String update(String name, String surname, @PathVariable("id") int id) throws SQLException {
 
         logger.info("Method update()");
 
-        Book book = new Book(id, name);
-        bookDao.update(book);
+        Author author = new Author(id, name, surname);
+        authorDAO.update(author);
 
-        return "Book updated!";
+        return "Author updated!";
     }
 
     @ResponseBody
@@ -86,10 +87,10 @@ public class BookController {
 
         logger.info("Method delete()");
 
-        Book book = new Book();
-        book.setId(id);
+        Author author = new Author();
+        author.setId(id);
 
-        if (bookDao.delete(book) > 0) return "Book deleted!";
-        return "Book is not found!";
+        if (authorDAO.delete(author) > 0) return "Author deleted!";
+        return "Author is not found!";
     }
 }
