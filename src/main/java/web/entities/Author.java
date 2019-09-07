@@ -1,4 +1,4 @@
-package entities;
+package web.entities;
 
 public class Author {
 

@@ -1,9 +1,9 @@
-package controller;
+package web.controller;
 
-import components.AuthorDAOImpl;
-import connect.ConnectionToDB;
-import dao.DAO;
-import entities.Author;
+import web.components.AuthorDAOImpl;
+import web.connect.ConnectionToDB;
+import web.dao.DAO;
+import web.entities.Author;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

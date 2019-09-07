@@ -1,10 +1,10 @@
-package application;
+package web.application;
 
-import components.BookDAOImpl;
-import connect.ConnectionToDB;
-import dao.DAO;
-import entities.Author;
-import entities.Book;
+import web.components.BookDAOImpl;
+import web.connect.ConnectionToDB;
+import web.dao.DAO;
+import web.entities.Author;
+import web.entities.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

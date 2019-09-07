@@ -1,9 +1,9 @@
-package controller;
+package web.controller;
 
-import components.BookDAOImpl;
-import connect.ConnectionToDB;
-import dao.DAO;
-import entities.Book;
+import web.components.BookDAOImpl;
+import web.connect.ConnectionToDB;
+import web.dao.DAO;
+import web.entities.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -65,7 +65,7 @@ public class BookController {
         book.setName(name);
         bookDao.save(book);
 
-        return "Book saved!";
+            return "Book saved!";
     }
 
     @ResponseBody

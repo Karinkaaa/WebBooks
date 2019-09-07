@@ -1,4 +1,4 @@
-package connect;
+package web.connect;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;

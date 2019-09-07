@@ -1,9 +1,9 @@
-package components;
+package web.components;
 
-import dao.AuthorDAO;
-import dao.DAO;
-import entities.Author;
-import entities.Book;
+import web.dao.AuthorDAO;
+import web.dao.DAO;
+import web.entities.Author;
+import web.entities.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
