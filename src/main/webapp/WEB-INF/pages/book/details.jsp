@@ -9,17 +9,19 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
     function deleteAuthor(id) {
-        $.ajax('${pageContext.request.contextPath}/api/books/' + id, {
+        $.ajax('${pageContext.request.contextPath}/api/authors/' + id, {
             type: 'delete',
             complete: redirectToMainPage
         });
     }
 
     function redirectToMainPage() {
-        location.href = "${pageContext.request.contextPath}/books";
+        location.href = "${pageContext.request.contextPath}/authors";
     }
 </script>
-
+<input value="ADD AUTHOR" type="submit" style="width:150px;height:60px; background:dodgerblue border-box"
+       onclick="location.href='${pageContext.request.contextPath}/authors/create'"/>
+<br/><br/><br/>
 <br/><b>ID: </b>
 <input readonly type="text" name="id" value="${book.id}"/>
 <b>Name: </b>
@@ -35,9 +37,9 @@
         <th width="150" style="background: darkslategrey">Delete</th>
     </tr>
     <tr style="height:35px">
-        <td> ${book.authors.id} </td>
-        <td> ${book.authors.name} </td>
         <c:forEach var="author" items="${book.authors}">
+        <td> ${author.id} </td>
+        <td> ${author.name} </td>
         <td>
             <a href="${pageContext.request.contextPath}/authors/update/${author.id}">update</a>
         </td>
