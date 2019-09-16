@@ -1,26 +1,24 @@
 package web.controller;
 
-import web.components.AuthorDAOImpl;
-import web.connect.ConnectionToDB;
-import web.dao.DAO;
-import web.entities.Author;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import web.components.AuthorDAOImpl;
+import web.connect.ConnectionToDB;
+import web.dao.DAO;
+import web.entities.Author;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @Controller
-@RequestMapping("authors")
+@RequestMapping("/authors")
 public class AuthorController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-
     private DAO<Author> authorDAO = new AuthorDAOImpl(new ConnectionToDB());
 
     public AuthorController() {
@@ -29,68 +27,25 @@ public class AuthorController {
 
     @ResponseBody
     @RequestMapping()
-    public String getAll() throws SQLException {
+    public ModelAndView getAll() throws SQLException {
 
-        logger.info("Method getAll()");
-
-        List<Author> list = authorDAO.getAll();
-        if (list == null) return "DB is empty!";
-
-        StringBuilder sb = new StringBuilder();
-        for (Author author : list)
-            sb.append(author.toString()).append("\n");
-
-        return sb.toString();
+        logger.info("Method Author getAll()");
+        return new ModelAndView("author/authors", "authors", authorDAO.getAll());
     }
 
     @ResponseBody
-    @RequestMapping("/{id}")
-    public String find(@PathVariable("id") int id) throws SQLException {
+    @RequestMapping("/create")
+    public ModelAndView create() throws SQLException {
 
-        logger.info("Method find()");
-
-        Author author = authorDAO.findById(id);
-
-        if (author != null) return author.toString();
-        return "Author is not found!";
+        logger.info("Method Author create()");
+        return new ModelAndView("book/create", "author", new Author());
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
-    public String save(String name, String surname) throws SQLException {
-
-        logger.info("Method save()");
-
-        Author author = new Author();
-        author.setName(name);
-        author.setSurname(surname);
-
-        authorDAO.save(author);
-        return "Author saved!";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public String update(String name, String surname, @PathVariable("id") int id) throws SQLException {
+    @RequestMapping("/update/{id}")
+    public ModelAndView update(@PathVariable("id") int id) throws SQLException {
 
         logger.info("Method update()");
-
-        Author author = new Author(id, name, surname);
-        authorDAO.update(author);
-
-        return "Author updated!";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable("id") int id) throws SQLException {
-
-        logger.info("Method delete()");
-
-        Author author = new Author();
-        author.setId(id);
-
-        if (authorDAO.delete(author) > 0) return "Author deleted!";
-        return "Author is not found!";
+        return new ModelAndView("book/update", "author", authorDAO.findById(id));
     }
 }

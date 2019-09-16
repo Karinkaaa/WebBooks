@@ -1,3 +1,5 @@
+package ee;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -26,12 +28,14 @@ public class HelloServlet extends HttpServlet {
 //                "</html>";
 //        resp.getWriter().write(s);
 
-        resp.getWriter().write("Hi, Bus!");
+        resp.getWriter().write("Hello Servlet");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         System.out.println("DoPost method()");
+        resp.getWriter().write("do post");
         doGet(req, resp);
     }
 

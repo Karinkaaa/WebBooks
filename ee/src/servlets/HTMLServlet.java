@@ -1,7 +1,4 @@
-package web.servlet;
-
-import JSP.MyModel;
-import JSP.Person;
+package servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,16 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("MyController")
-public class MyController extends HttpServlet {
-
-    MyModel myModel = new MyModel();
+@WebServlet("/html-servlet")
+public class HTMLServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Person person = myModel.getPerson();
-        req.setAttribute("Student", person);
-        req.getSession().setAttribute("Student", person);
+        resp.setContentType("");
     }
 }

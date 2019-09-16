@@ -1,9 +1,9 @@
 package web.components;
 
-import web.dao.AuthorDAO;
-import web.entities.Author;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import web.dao.AuthorDAO;
+import web.entities.Author;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthorDAOImpl implements AuthorDAO<Author> {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private DataSource dataSource;
 
     public AuthorDAOImpl(DataSource dataSource) {
@@ -89,22 +89,20 @@ public class AuthorDAOImpl implements AuthorDAO<Author> {
     }
 
     @Override
-    public int delete(Author obj) throws SQLException {
+    public Author delete(Author obj) throws SQLException {
 
-        int res = 0;
         String sql = "delete from Authors where id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, obj.getId());
-            res = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
         }
-
-        return res;
+        return obj;
     }
 
     @Override

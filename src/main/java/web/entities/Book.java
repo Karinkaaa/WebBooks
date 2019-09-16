@@ -60,8 +60,8 @@ public class Book {
     @Override
     public String toString() {
 
-        StringBuilder sb = new StringBuilder("\nBOOK:\n");
-        sb.append("\nID: ").append(getId());
+        StringBuilder sb = new StringBuilder("BOOK:");
+        sb.append("\nId: ").append(getId());
         sb.append("\nName: ").append(getName());
         sb.append("\nAuthors: ");
 
@@ -71,8 +71,6 @@ public class Book {
         } else {
             for (Author author : authors)
                 sb.append(author).append(", ");
-
-            sb.deleteCharAt(sb.length() - 2);
         }
         return sb.toString();
     }

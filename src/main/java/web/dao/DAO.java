@@ -9,7 +9,7 @@ public interface DAO<T> {
 
     void update(T obj) throws SQLException;
 
-    int delete(T obj) throws SQLException;
+    T delete(T obj) throws SQLException;
 
     T findById(long id) throws SQLException;
 

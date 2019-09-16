@@ -1,4 +1,4 @@
-package JSP;
+package jsp;
 
 public class MyModel {
 
@@ -6,8 +6,7 @@ public class MyModel {
 
         Person person = new Person();
         person.setName("Karina");
-        person.setAge(22);
-
+        person.setAge(22);;
         return person;
     }
 }

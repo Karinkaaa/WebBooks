@@ -147,8 +147,8 @@ public class Main {
                 Book book = new Book();
                 book.setId(id);
 
-                int res = bookDao.delete(book);
-                if (res > 0) logger.info(("Book deleted..."));
+                bookDao.delete(book);
+                logger.info(("Book deleted..."));
             }
 
         } while (action != 0);

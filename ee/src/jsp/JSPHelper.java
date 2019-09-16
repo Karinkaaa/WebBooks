@@ -1,4 +1,4 @@
-package JSP;
+package jsp;
 
 public class JSPHelper {
 

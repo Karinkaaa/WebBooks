@@ -1,8 +1,8 @@
+package ee;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -149,7 +149,45 @@ public class TempServlet extends HttpServlet {
 
         // Cookies
 
+//        Cookie cookie = new Cookie("testCookie", "own-cookie");
+//        resp.addCookie(cookie);
+//
+//        // cookie только для этого пути
+//        cookie.setPath("/temp");
+//
+//        // на своем localhost можно прописывать, какие домены будут видеть этот cookie
+//        cookie.setDomain("second.my.localhost");
+//
+//        // true - cookies будут видны только при HTTPS соединении
+//        cookie.setSecure(true);
+//
+//        Cookie cookie2 = new Cookie("testCookie2", "own-cookie2");
+//        resp.addCookie(cookie2);
+//        cookie2.setMaxAge(5);    // удалится через 5 секунд
+//
+//        Cookie[] cookies = req.getCookies();
+//        for (Cookie c : cookies) {
+//            System.out.println("Cookie name: " + c.getName());
+//            System.out.println("Cookie value: " + c.getValue());
+//            System.out.println("Cookie max age: " + c.getMaxAge());
+//        }
 
+
+        // Session
+
+//        HttpSession session = req.getSession();
+//        Enumeration<String> attributeNames = session.getAttributeNames();
+//
+//        while (attributeNames.hasMoreElements()) {
+//            String attributeName = attributeNames.nextElement();
+//            System.out.println(attributeName + " = " + session.getAttribute(attributeName));
+//        }
+//
+//        session.setAttribute("one", "two");
+//        System.out.println("Max inactive interval: " + session.getMaxInactiveInterval() + " seconds");
+//
+//        // очищается сессия
+//        session.invalidate();
 
     }
 

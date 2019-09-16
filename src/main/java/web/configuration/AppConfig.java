@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@ComponentScan(basePackages = {"controller", "components", "dao", "exception"})
+@ComponentScan(basePackages = {"web"})
 @Import(DataBaseConfiguration.class)
 public class AppConfig {
 }

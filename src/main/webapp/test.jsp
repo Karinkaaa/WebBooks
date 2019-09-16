@@ -10,18 +10,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%
     String[] people = new String[] {"Tom", "Bob", "Sam"};
     String header = "Users list";
 %>
-
 <html>
 <head>
     <title>Test JSP</title>
 </head>
 <body>
-
     <%-- JSP Expression --%>
 
     <p>2 + 2 = <%= 2 + 2 %></p>
@@ -34,7 +31,7 @@
     <h3> <%= header %> </h3>
     <%
         for (String person : people) {
-            System.out.println("<li>" + person + "</li>");
+            System.out.println(person);
         }
     %>
 

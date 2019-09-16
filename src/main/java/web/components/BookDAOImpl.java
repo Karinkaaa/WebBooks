@@ -1,11 +1,11 @@
 package web.components;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import web.dao.AuthorDAO;
 import web.dao.DAO;
 import web.entities.Author;
 import web.entities.Book;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -88,7 +88,7 @@ public class BookDAOImpl implements DAO<Book> {
 
             preparedStatement.setString(1, obj.getName());
             preparedStatement.setInt(2, obj.getId());
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
 
             setRelations(obj);
 
@@ -98,22 +98,20 @@ public class BookDAOImpl implements DAO<Book> {
     }
 
     @Override
-    public int delete(Book obj) throws SQLException {
+    public Book delete(Book obj) throws SQLException {
 
-        int res = 0;
         String sql = "delete from Books where id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, obj.getId());
-            res = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
         }
-
-        return res;
+        return obj;
     }
 
     @Override
