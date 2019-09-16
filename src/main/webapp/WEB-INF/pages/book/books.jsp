@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="../common/lib.jsp"%>
 <html>
 <head>
     <title>Books</title>
@@ -11,8 +12,6 @@
 <br/><br/><br/>
 <table border="2" style="border: floralwhite dot-dash medium">
     <tbody>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script src="http://malsup.github.com/jquery.form.js"></script>
     <script>
         function deleteBook (id) {
             $.ajax('${pageContext.request.contextPath}/api/books/' + id, {
