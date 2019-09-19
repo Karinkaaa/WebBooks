@@ -2,7 +2,7 @@
 <%@ include file="../common/lib.jsp"%>
 <html>
 <head>
-    <title>Update</title>
+    <title>UpdateBook</title>
 </head>
 <body>
 <script>
