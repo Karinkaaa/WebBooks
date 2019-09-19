@@ -38,7 +38,7 @@ public class AuthorController {
     public ModelAndView create() throws SQLException {
 
         logger.info("Method Author create()");
-        return new ModelAndView("book/create", "author", new Author());
+        return new ModelAndView("author/create", "author", new Author());
     }
 
     @ResponseBody
@@ -46,6 +46,6 @@ public class AuthorController {
     public ModelAndView update(@PathVariable("id") int id) throws SQLException {
 
         logger.info("Method update()");
-        return new ModelAndView("book/update", "author", authorDAO.findById(id));
+        return new ModelAndView("author/update", "author", authorDAO.findById(id));
     }
 }
