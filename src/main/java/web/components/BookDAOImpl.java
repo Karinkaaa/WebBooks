@@ -26,7 +26,7 @@ public class BookDAOImpl implements DAO<Book> {
 
     private void updateRelations(int bookId, int authorId) throws SQLException {
 
-        String sql = "insert into Books_Authors(bookId, authorId) values ( ?, ? )";
+        String sql = "insert ignore into Books_Authors(bookId, authorId) values ( ?, ? )";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

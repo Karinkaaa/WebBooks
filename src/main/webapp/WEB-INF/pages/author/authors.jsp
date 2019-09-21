@@ -33,7 +33,22 @@
 </script>
 
 <body>
-<div class="row justify-content-md-center">
+<div class="row">
+
+    <div class="col-2">
+        <br/>
+        <div class="row justify-content-md-center">
+            <input class="btn btn-dark bth-lg" type="button" value="Main Page"
+                   onclick="location.href ='${pageContext.request.contextPath}/'">
+        </div>
+
+        <br/>
+        <div class="row justify-content-md-center">
+            <input class="btn btn-dark bth-lg" type="button" value="Cancel"
+                   onclick="location.href ='${pageContext.request.contextPath}/books/details/{${author.id}}'">
+        </div>
+    </div>
+
     <div class="col-8">
         <br/>
         <input class="btn btn-info btn-lg btn-size" value="CREATE AUTHOR" type="submit"

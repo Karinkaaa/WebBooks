@@ -46,6 +46,31 @@ public class AuthorDAOImpl implements AuthorDAO<Author> {
     }
 
     @Override
+    public List<Author> filter(int bookId, String name) throws SQLException {
+
+        List<Author> resultList = new ArrayList<>();
+        String sql = "select * from Authors where (Authors.name like ? or surname like ?) " +
+                "and Authors.id in (select authorId from Books_Authors where bookId != ?)";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            name = "%" + name + "%";
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, name);
+            preparedStatement.setInt(3, bookId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Author author = new Author(resultSet.getInt("id"), resultSet.getString("name"),
+                        resultSet.getString("surname"));
+                resultList.add(author);
+            }
+        }
+        return resultList;
+    }
+
+    @Override
     public void save(Author obj) throws SQLException {
 
         String sql = "insert into Authors(id, name, surname) values ( ?, ?, ? )";

@@ -15,6 +15,7 @@ create table Books_Authors
 (
     bookId   int not null,
     authorId int not null,
+    unique (bookId, authorId),
     foreign key (bookId) references Books (id) ON DELETE CASCADE,
     foreign key (authorId) references Authors (id) ON DELETE CASCADE
 );

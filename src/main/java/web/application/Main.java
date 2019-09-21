@@ -52,7 +52,7 @@ public class Main {
                     logger.info("Enter the surname of " + (i + 1) + "-th author: ");
                     surname = scanner.next();
 
-                    book.setAuthor(new Author(name, surname));
+                    book.addAuthor(new Author(name, surname));
                 }
 
                 bookDao.save(book);
@@ -107,7 +107,7 @@ public class Main {
                             logger.info("Enter the surname of author: ");
                             surname = scanner.next();
 
-                            book.setAuthor(new Author(name, surname));
+                            book.addAuthor(new Author(name, surname));
                         }
                     }
                 } else {
@@ -131,7 +131,7 @@ public class Main {
                                 logger.info("Enter the new surname of author: ");
                                 surname = scanner.next();
 
-                                book.setAuthor(new Author(name, surname));
+                                book.addAuthor(new Author(name, surname));
                             }
                         }
                     }

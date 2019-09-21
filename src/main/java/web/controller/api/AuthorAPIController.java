@@ -1,9 +1,5 @@
 package web.controller.api;
 
-import web.components.AuthorDAOImpl;
-import web.connect.ConnectionToDB;
-import web.dao.DAO;
-import web.entities.Author;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,6 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import web.components.AuthorDAOImpl;
+import web.connect.ConnectionToDB;
+import web.dao.AuthorDAO;
+import web.entities.Author;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 public class AuthorAPIController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-    private DAO<Author> authorDAO = new AuthorDAOImpl(new ConnectionToDB());
+    private AuthorDAO<Author> authorDAO = new AuthorDAOImpl(new ConnectionToDB());
 
     public AuthorAPIController() {
         logger.info("Author API controller created...");
@@ -78,5 +79,14 @@ public class AuthorAPIController {
 
         authorDAO.delete(author);
         return author;
+    }
+
+    @ResponseBody
+    @RequestMapping("/filter")
+    public List<Author> filter(Integer bookId, String name) throws SQLException {
+
+        logger.info("Method Author API filter()");
+        logger.info("Book id: " + bookId + "\nName: " + name);
+        return authorDAO.filter(bookId, name);
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import web.components.AuthorDAOImpl;
 import web.connect.ConnectionToDB;
-import web.dao.DAO;
+import web.dao.AuthorDAO;
 import web.entities.Author;
 
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class AuthorController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-    private DAO<Author> authorDAO = new AuthorDAOImpl(new ConnectionToDB());
+    private AuthorDAO<Author> authorDAO = new AuthorDAOImpl(new ConnectionToDB());
 
     public AuthorController() {
         logger.info("Author controller created...");
@@ -47,5 +47,15 @@ public class AuthorController {
 
         logger.info("Method update()");
         return new ModelAndView("author/update", "author", authorDAO.findById(id));
+    }
+
+    @ResponseBody
+    @RequestMapping("/filter")
+    public ModelAndView filter(Integer bookId, String name) throws SQLException {
+
+        if (bookId==null) bookId = 0;
+        if (name==null) name = "";
+        logger.info("Method filter()");
+        return new ModelAndView("author/search", "authors", authorDAO.filter(bookId, name));
     }
 }

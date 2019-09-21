@@ -49,7 +49,7 @@ public class Book {
         this.authors = authors;
     }
 
-    public void setAuthor(Author author) {
+    public void addAuthor(Author author) {
         authors.add(author);
     }
 

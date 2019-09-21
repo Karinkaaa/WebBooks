@@ -46,6 +46,52 @@
         background-image: url("http://www.topoboi.com/large/201307/5689.jpg");
         background-size: cover;
     }
+
+    blockquote {
+        margin: 0;
+        background: black;
+        color: #5F5F5F;
+        padding: 30px 30px 30px 80px;
+        position: relative;
+        font-family: 'Lato', sans-serif;
+    }
+    blockquote:before {
+        content: "\1F676";
+        position: absolute;
+        z-index: 2;
+        left: 30px;
+        top: 15px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 80px;
+        color: #F2EAD7;
+        font-size: 50px;
+        background: rgba(188,231,250, .7);
+    }
+    blockquote:after {
+        content: "";
+        position: absolute;
+        left: 34px;
+        top: 19px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(242,124,176, .7);
+    }
+    blockquote p {
+        font-size: 24px;
+        letter-spacing: .05em;
+        line-height: 1.4;
+        margin: 0 0 16px;
+        position: relative;
+        z-index: 3;
+    }
+    blockquote cite {
+        font-style: normal;
+        font-weight: 300;
+    }
 </style>
 
 <head>
@@ -70,8 +116,18 @@
 <div class="row">
 
     <div class="col-2">
-        dfoigdofghodhgidfk<br/>
-        sfoshg rhgfsd dfhg dfgdfg rhgo rhg djf dsofosd sdo sd sdgfoudog duodi do dfdg dg<br/>
+        <div class="col">
+            <div class="row justify-content-md-left">
+                <input class="btn btn-dark bth-lg" type="button" value="Main Page"
+                       onclick="location.href ='${pageContext.request.contextPath}/'">
+            </div>
+            <br/><br/>
+        </div>
+
+        <blockquote>
+            <p>Книга – устройство, способное разжечь воображение.</p>
+            <footer>— <cite>Алан Беннетт</cite></footer>
+        </blockquote>
     </div>
 
     <div class="col-8">
@@ -112,13 +168,6 @@
             </tbody>
         </table>
     </div>
-
-    <div class="col">
-        dfoigdofghodhgidfk<br/>
-        sfoshg rhgfsd dfhg dfgdfg rhgo rhg dg<br/>
-        asdl sd fpsd fsldfjsd
-    </div>
-
 </div>
 </body>
 </html>
