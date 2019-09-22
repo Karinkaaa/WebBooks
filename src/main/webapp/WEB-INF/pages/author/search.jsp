@@ -1,8 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<table class="table">
 
-    <thead class="thead-dark">
-    <tr>
+<table class="table">
+    <thead class="thead">
+
+    <tr class="table-success">
         <th scope="col"></th>
         <th scope="col">ID</th>
         <th scope="col">Name</th>
@@ -15,7 +16,8 @@
         <tr>
             <td>
                 <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" id="radioButton${author.id}" name="authorId" value="${author.id}">
+                    <input class="custom-control-input" type="radio" id="radioButton${author.id}" name="authorId"
+                           value="${author.id}">
                     <label class="custom-control-label" for="radioButton${author.id}"></label>
                 </div>
             </td>
