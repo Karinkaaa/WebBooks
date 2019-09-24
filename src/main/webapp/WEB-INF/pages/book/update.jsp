@@ -48,12 +48,20 @@
     }
 
     function addAuthor() {
-        debugger
         var authorId = $("input[name='authorId']:checked").val();
         $.ajax('${pageContext.request.contextPath}/api/books/${book.id}/' + authorId, {
             type: 'post',
             complete: function () {
-                location.href = location.href;
+                window.location.reload();
+            }
+        });
+    }
+
+    function deleteAuthor(authorId) {
+        $.ajax('${pageContext.request.contextPath}/api/books/${book.id}/' + authorId, {
+            type: 'delete',
+            complete: function () {
+                window.location.reload();
             }
         });
     }

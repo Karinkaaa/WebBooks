@@ -24,6 +24,42 @@ public class BookDAOImpl implements DAO<Book> {
         this.authorDAO = new AuthorDAOImpl(dataSource);
     }
 
+    private void removeRelations(Book book) throws SQLException {
+
+        String sql;
+        List<Author> authors = book.getAuthors();
+
+        if (authors.size() == 0) {
+            sql = "delete from Books_Authors where bookId = ?";
+
+        } else {
+            sql = "delete from Books_Authors where bookId = ? and authorId not in (";
+
+            for (int i = 0; i < authors.size(); i++) {
+
+                if (i < authors.size() - 1)
+                    sql += "?, ";
+                else
+                    sql += "?)";
+            }
+        }
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, book.getId());
+
+            for (int i = 0; i < authors.size(); i++) {
+                preparedStatement.setInt(i + 2, authors.get(i).getId());
+            }
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            logger.error(ex.getMessage());
+            throw ex;
+        }
+    }
+
     private void updateRelations(int bookId, int authorId) throws SQLException {
 
         String sql = "insert ignore into Books_Authors(bookId, authorId) values ( ?, ? )";
@@ -44,12 +80,15 @@ public class BookDAOImpl implements DAO<Book> {
     private void setRelations(Book book) throws SQLException {
 
         List<Author> authors = book.getAuthors();
+
         for (Author author : authors) {
 
             if (author.getId() == null)
                 authorDAO.save(author);
+
             updateRelations(book.getId(), author.getId());
         }
+        removeRelations(book);
     }
 
     @Override
@@ -94,6 +133,7 @@ public class BookDAOImpl implements DAO<Book> {
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
+            throw ex;
         }
     }
 
@@ -110,6 +150,7 @@ public class BookDAOImpl implements DAO<Book> {
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
+            throw ex;
         }
         return obj;
     }
@@ -135,6 +176,7 @@ public class BookDAOImpl implements DAO<Book> {
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
+            throw ex;
         }
 
         return book;
@@ -158,6 +200,7 @@ public class BookDAOImpl implements DAO<Book> {
 
         } catch (SQLException ex) {
             logger.error(ex.getMessage());
+            throw ex;
         }
 
         return (listOfBooks.size() == 0) ? null : listOfBooks;

@@ -34,7 +34,7 @@ public class BookAPIController {
     @RequestMapping()
     public List<Book> getAll() throws SQLException {
 
-        logger.info("Method getAll()");
+        logger.info("Method Book API getAll()");
         return bookDao.getAll();
     }
 
@@ -42,7 +42,7 @@ public class BookAPIController {
     @RequestMapping("/{id}")
     public Book find(@PathVariable("id") int id) throws SQLException {
 
-        logger.info("Method find()");
+        logger.info("Method Book API find()");
         return bookDao.findById(id);
     }
 
@@ -50,7 +50,7 @@ public class BookAPIController {
     @RequestMapping(method = RequestMethod.POST)
     public Book save(String name) throws SQLException {
 
-        logger.info("Method save()");
+        logger.info("Method Book API save()");
 
         Book book = new Book();
         book.setName(name);
@@ -62,7 +62,7 @@ public class BookAPIController {
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public Book update(String name, @PathVariable("id") int id) throws SQLException {
 
-        logger.info("Method update()");
+        logger.info("Method Book API update()");
         logger.info("Name: " + name + "\nID: " + id);
 
         Book book = new Book(id, name);
@@ -74,7 +74,7 @@ public class BookAPIController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Book delete(@PathVariable("id") int id) throws SQLException {
 
-        logger.info("Method delete()");
+        logger.info("Method Book API delete()");
 
         Book book = new Book();
         book.setId(id);
@@ -84,14 +84,32 @@ public class BookAPIController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/{id}/{aid}", method = RequestMethod.DELETE)
+    public Book deleteAuthor(@PathVariable("id") int id, @PathVariable("aid") int aid) throws SQLException {
+
+        logger.info("Method Book API deleteAuthor()");
+
+        Book book = bookDao.findById(id);
+        Author author = authorDAO.findById(aid);
+
+        book.removeAuthor(author);
+        bookDao.update(book);
+
+        return book;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/{id}/{aid}", method = RequestMethod.POST)
     public Book addAuthor(@PathVariable("id") int bookId, @PathVariable("aid") int authorId) throws SQLException {
 
+        logger.info("Method Book API addAuthor()");
+
         Author author = authorDAO.findById(authorId);
         Book book = bookDao.findById(bookId);
-        book.addAuthor(author);
 
+        book.addAuthor(author);
         bookDao.update(book);
+
         return book;
     }
 }

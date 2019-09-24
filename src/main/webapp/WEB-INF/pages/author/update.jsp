@@ -125,7 +125,7 @@
         <br/><br/><br/><br/>
         <blockquote>
             <p><br/>Как только вы научитесь читать, вы будете всегда свободны.</p>
-            <footer>— <cite> Фредерик Дуглас</cite></footer>
+            <footer>— <cite>Фредерик Дуглас</cite></footer>
         </blockquote>
     </div>
 </div>

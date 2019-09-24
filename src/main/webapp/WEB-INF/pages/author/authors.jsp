@@ -41,12 +41,6 @@
             <input class="btn btn-dark bth-lg" type="button" value="Main Page"
                    onclick="location.href ='${pageContext.request.contextPath}/'">
         </div>
-
-        <br/>
-        <div class="row justify-content-md-center">
-            <input class="btn btn-dark bth-lg" type="button" value="Cancel"
-                   onclick="location.href ='${pageContext.request.contextPath}/books/details/{${author.id}}'">
-        </div>
     </div>
 
     <div class="col-8">

@@ -50,12 +50,12 @@ public class AuthorDAOImpl implements AuthorDAO<Author> {
 
         List<Author> resultList = new ArrayList<>();
         String sql = "select * from Authors where (Authors.name like ? or surname like ?) " +
-                "and Authors.id in (select authorId from Books_Authors where bookId != ?)";
+                "and Authors.id not in (select authorId from Books_Authors where bookId = ?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            name = "%" + name + "%";
+            name = ("%" + name + "%");
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, name);
             preparedStatement.setInt(3, bookId);

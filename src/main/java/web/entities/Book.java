@@ -53,6 +53,10 @@ public class Book {
         authors.add(author);
     }
 
+    public void removeAuthor(Author author) {
+        authors.remove(author);
+    }
+
     public Author getAuthorById(int id) {
         return (id > authors.size()) ? null : authors.get(id);
     }
@@ -73,5 +77,14 @@ public class Book {
                 sb.append(author).append(", ");
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj instanceof Book) {
+            return (id == ((Book) obj).getId());
+        }
+        return false;
     }
 }

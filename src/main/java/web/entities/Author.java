@@ -48,4 +48,13 @@ public class Author {
     public String toString() {
         return getName() + " " + getSurname();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj instanceof Author) {
+            return (id == ((Author) obj).getId());
+        }
+        return false;
+    }
 }
