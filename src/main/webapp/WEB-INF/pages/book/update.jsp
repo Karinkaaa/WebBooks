@@ -133,18 +133,19 @@
                     </tr>
                     </thead>
 
-                    <tr>
-                        <c:forEach var="author" items="${book.authors}">
-                        <td> ${author.id} </td>
-                        <td> ${author.name} </td>
-                        <td> ${author.surname} </td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/authors/update/${author.id}">update</a>
-                        </td>
-                        <td>
-                            <button onclick="deleteAuthor(${author.id})">delete</button>
-                        </td>
-                    </tr>
+                    <tbody>
+                    <c:forEach var="author" items="${book.authors}">
+                        <tr>
+                            <td> ${author.id} </td>
+                            <td> ${author.name} </td>
+                            <td> ${author.surname} </td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/authors/update/${author.id}">update</a>
+                            </td>
+                            <td>
+                                <button onclick="deleteAuthor(${author.id})">delete</button>
+                            </td>
+                        </tr>
                     </c:forEach>
                     </tbody>
                 </table>

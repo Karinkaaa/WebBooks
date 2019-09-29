@@ -6,18 +6,19 @@
    http://www.springframework.org/schema/context
    http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:component-scan base-package = "web" />
+    <context:component-scan base-package="web"/>
 
-    <bean class = "org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name = "prefix" value = "/WEB-INF/pages/" />
-        <property name = "suffix" value = ".jsp" />
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
     </bean>
 
     <mvc:annotation-driven>
         <!--use int RestController to produce pretty json response-->
         <mvc:message-converters>
-            <bean id="jacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                <property name="prettyPrint" value="true" />
+            <bean id="jacksonHttpMessageConverter"
+                  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true"/>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>

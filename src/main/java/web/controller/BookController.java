@@ -2,6 +2,7 @@ package web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,17 +14,18 @@ import web.dao.DAO;
 import web.entities.Book;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-    private DAO<Book> bookDao = new BookDAOImpl(new ConnectionToDB());
 
-    public BookController() {
+    private final DAO<Book> bookDao;
+
+    public BookController(DAO<Book> bookDao) {
         logger.info("Book controller created...");
+        this.bookDao = bookDao;
     }
 
     @ResponseBody
@@ -31,9 +33,7 @@ public class BookController {
     public ModelAndView getAll() throws SQLException {
 
         logger.info("Method getAll()");
-
-        List<Book> list = bookDao.getAll();
-        return new ModelAndView("book/books", "books", list);
+        return new ModelAndView("book/books", "books", bookDao.getAll());
     }
 
     @ResponseBody
@@ -41,9 +41,7 @@ public class BookController {
     public ModelAndView details(@PathVariable int id) throws SQLException {
 
         logger.info("Method details()");
-
-        Book book = bookDao.findById(id);
-        return new ModelAndView("book/details", "book", book);
+        return new ModelAndView("book/details", "book", bookDao.findById(id));
     }
 
     @ResponseBody
@@ -59,8 +57,6 @@ public class BookController {
     public ModelAndView update(@PathVariable("id") int id) throws SQLException {
 
         logger.info("Method update()");
-
-        Book book = bookDao.findById(id);
-        return new ModelAndView("book/update", "book", book);
+        return new ModelAndView("book/update", "book", bookDao.findById(id));
     }
 }

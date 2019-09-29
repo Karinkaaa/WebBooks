@@ -2,16 +2,19 @@ package web.controller.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import web.components.AuthorDAOImpl;
+import web.components.BookDAOImpl;
 import web.connect.ConnectionToDB;
 import web.dao.AuthorDAO;
+import web.dao.DAO;
 import web.entities.Author;
+import web.entities.Book;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,10 +24,14 @@ import java.util.List;
 public class AuthorAPIController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-    private AuthorDAO<Author> authorDAO = new AuthorDAOImpl(new ConnectionToDB());
 
-    public AuthorAPIController() {
+    private final DAO<Book> bookDao;
+    private final AuthorDAO<Author> authorDAO;
+
+    public AuthorAPIController(DAO<Book> bookDao, AuthorDAO<Author> authorDAO) {
         logger.info("Author API controller created...");
+        this.bookDao = bookDao;
+        this.authorDAO = authorDAO;
     }
 
     @ResponseBody
@@ -78,6 +85,21 @@ public class AuthorAPIController {
         author.setId(id);
 
         authorDAO.delete(author);
+        return author;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/{id}/{aid}", method = RequestMethod.DELETE)
+    public Author deleteBook(@PathVariable("id") int id, @PathVariable("aid") int aid) throws SQLException {
+
+        logger.info("Method Author API deleteBook()");
+
+        Book book = bookDao.findById(id);
+        Author author = authorDAO.findById(aid);
+
+        author.removeBook(book);
+        authorDAO.update(author);
+
         return author;
     }
 

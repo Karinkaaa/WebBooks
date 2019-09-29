@@ -3,7 +3,7 @@
 <%@ include file="../common/lib.jsp" %>
 <html>
 <head>
-    <title>Details</title>
+    <title>AllBooksOfAuthor</title>
     <style>
         body {
             background-image: url("https://99px.ru/sstorage/53/2012/02/tmb_34210_9178.jpg");
@@ -96,7 +96,7 @@
                     <h3 class="font-weight-bold">ID:</h3>
                 </div>
                 <div class="col-8">
-                    <h3>${book.id}</h3>
+                    <h3>${author.id}</h3>
                 </div>
                 <br/>
             </div>
@@ -106,7 +106,7 @@
                     <h3 class="font-weight-bold">Name:</h3>
                 </div>
                 <div class="col-8">
-                    <input type="text" name="name" value="${book.name}"/>
+                    <input type="text" name="name" value="${author.name}"/>
                 </div>
             </div>
 

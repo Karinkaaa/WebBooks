@@ -1,30 +1,36 @@
 package web.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Author {
 
-    private Integer id = null;
+    private int id;
     private String name;
     private String surname;
+    private List<Book> books;
 
     public Author() {
+        this.books = new ArrayList<>();
     }
 
-    public Author(String name, String surname) {
+    public Author(int id, String name, String surname) {
         this.name = name;
         this.surname = surname;
     }
 
-    public Author(Integer id, String name, String surname) {
+    public Author(int id, String name, String surname, List<Book> books) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.books = books;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -42,6 +48,22 @@ public class Author {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void removeBook(Book book) {
+        books.remove(book);
     }
 
     @Override

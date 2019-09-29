@@ -118,7 +118,7 @@
     <div class="col-2">
         <div class="col">
             <div class="row justify-content-md-left">
-                <input class="btn btn-dark bth-lg" type="button" value="Main Page"
+                <input class="btn btn-dark bth-lg" type="button" value="ApplicationDemo Page"
                        onclick="location.href ='${pageContext.request.contextPath}/'">
             </div>
             <br/><br/>

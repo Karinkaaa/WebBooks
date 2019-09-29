@@ -20,7 +20,7 @@
 </head>
 
 <script>
-    function deleteAuthor(id) {
+    function deleteBook(id) {
         $.ajax('${pageContext.request.contextPath}/api/authors/' + id, {
             type: 'delete',
             complete: redirectToMainPage
@@ -38,7 +38,7 @@
     <div class="col-2">
         <br/>
         <div class="row justify-content-md-center">
-            <input class="btn btn-dark bth-lg" type="button" value="Main Page"
+            <input class="btn btn-dark bth-lg" type="button" value="ApplicationDemo Page"
                    onclick="location.href ='${pageContext.request.contextPath}/'">
         </div>
     </div>
@@ -55,6 +55,7 @@
                 <th scope="col" width="300">Surname</th>
                 <th scope="col" width="180">Update</th>
                 <th scope="col" width="180">Delete</th>
+                <th scope="col" width="180">Books</th>
             </tr>
             </thead>
             <tbody>
@@ -69,7 +70,13 @@
                     </button>
                 </td>
                 <td align="center">
-                    <button class="btn btn-danger" onclick="deleteAuthor(${author.id})">delete</button>
+                    <button class="btn btn-danger" onclick="deleteBook(${author.id})">delete</button>
+                </td>
+                <td align="center">
+                    <button class="btn btn-info"
+                            onclick="location.href='${pageContext.request.contextPath}/authors/details/${author.id}'">
+                        details
+                    </button>
                 </td>
                 </tr>
             </c:forEach>

@@ -2,13 +2,7 @@
 <%@ page import="web.entities.Book" %>
 <%@ page import="web.entities.Author" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: karinka
-  Date: 06.09.2019
-  Time: 16:06
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String[] people = new String[] {"Tom", "Bob", "Sam"};

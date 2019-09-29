@@ -2,6 +2,7 @@ package web.controller.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +24,13 @@ public class BookAPIController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-    private DAO<Book> bookDao = new BookDAOImpl(new ConnectionToDB());
-    private DAO<Author> authorDAO = new AuthorDAOImpl(new ConnectionToDB());
+    private final DAO<Book> bookDao;
+    private final DAO<Author> authorDAO;
 
-    public BookAPIController() {
+    public BookAPIController(DAO<Book> bookDao, DAO<Author> authorDAO) {
         logger.info("Book API controller created...");
+        this.bookDao = bookDao;
+        this.authorDAO = authorDAO;
     }
 
     @ResponseBody

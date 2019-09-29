@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Book {
 
-    private Integer id = null;
+    private int id;
     private String name;
     private List<Author> authors;
 
@@ -13,23 +13,23 @@ public class Book {
         this.authors = new ArrayList<>();
     }
 
-    public Book(Integer id, String name) {
+    public Book(int id, String name) {
         this();
         this.id = id;
         this.name = name;
     }
 
-    public Book(Integer id, String name, List<Author> authors) {
+    public Book(int id, String name, List<Author> authors) {
         this.id = id;
         this.name = name;
         this.authors = authors;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

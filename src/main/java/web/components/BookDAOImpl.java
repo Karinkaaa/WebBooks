@@ -2,6 +2,8 @@ package web.components;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import web.dao.AuthorDAO;
 import web.dao.DAO;
 import web.entities.Author;
@@ -12,6 +14,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class BookDAOImpl implements DAO<Book> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -19,9 +22,10 @@ public class BookDAOImpl implements DAO<Book> {
     private AuthorDAO<Author> authorDAO;
     private DataSource dataSource;
 
-    public BookDAOImpl(DataSource dataSource) {
+    @Autowired
+    public BookDAOImpl(AuthorDAO<Author> authorDAO, DataSource dataSource) {
+        this.authorDAO = authorDAO;
         this.dataSource = dataSource;
-        this.authorDAO = new AuthorDAOImpl(dataSource);
     }
 
     private void removeRelations(Book book) throws SQLException {
@@ -30,10 +34,10 @@ public class BookDAOImpl implements DAO<Book> {
         List<Author> authors = book.getAuthors();
 
         if (authors.size() == 0) {
-            sql = "delete from Books_Authors where bookId = ?";
+            sql = "delete from Books_Authors where authorId = ?";
 
         } else {
-            sql = "delete from Books_Authors where bookId = ? and authorId not in (";
+            sql = "delete from Books_Authors where authorId = ? and bookId not in (";
 
             for (int i = 0; i < authors.size(); i++) {
 
@@ -83,7 +87,7 @@ public class BookDAOImpl implements DAO<Book> {
 
         for (Author author : authors) {
 
-            if (author.getId() == null)
+            if (author.getId() > 0)
                 authorDAO.save(author);
 
             updateRelations(book.getId(), author.getId());

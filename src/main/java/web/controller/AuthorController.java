@@ -2,6 +2,8 @@ package web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +21,12 @@ import java.sql.SQLException;
 public class AuthorController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-    private AuthorDAO<Author> authorDAO = new AuthorDAOImpl(new ConnectionToDB());
 
-    public AuthorController() {
+    private final AuthorDAO<Author> authorDAO;
+
+    public AuthorController(AuthorDAO<Author> authorDAO) {
         logger.info("Author controller created...");
+        this.authorDAO = authorDAO;
     }
 
     @ResponseBody
@@ -45,17 +49,25 @@ public class AuthorController {
     @RequestMapping("/update/{id}")
     public ModelAndView update(@PathVariable("id") int id) throws SQLException {
 
-        logger.info("Method update()");
+        logger.info("Method Author update()");
         return new ModelAndView("author/update", "author", authorDAO.findById(id));
+    }
+
+    @ResponseBody
+    @RequestMapping("/details/{id}")
+    public ModelAndView details(@PathVariable int id) throws SQLException {
+
+        logger.info("Method Author details()");
+        return new ModelAndView("author/details", "author", authorDAO.findById(id));
     }
 
     @ResponseBody
     @RequestMapping("/filter")
     public ModelAndView filter(Integer bookId, String name) throws SQLException {
 
-        if (bookId==null) bookId = 0;
-        if (name==null) name = "";
-        logger.info("Method filter()");
+        if (bookId == null) bookId = 0;
+        if (name == null) name = "";
+        logger.info("Method Author filter()");
         return new ModelAndView("author/search", "authors", authorDAO.filter(bookId, name));
     }
 }

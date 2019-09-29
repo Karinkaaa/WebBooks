@@ -31,10 +31,12 @@
             padding: 30px 50px;
             font-family: 'Lato', sans-serif;
         }
+
         blockquote p {
             font-size: 22px;
             margin-top: 30px;
         }
+
         blockquote p:before {
             content: "\201C";
             font-size: 100px;
@@ -45,6 +47,7 @@
             left: 50%;
             transform: translateX(-50%);
         }
+
         blockquote cite {
             font-style: normal;
         }
@@ -77,7 +80,8 @@
 
         <br/><br/><br/><br/><br/>
         <blockquote>
-            <p>Читать — это как думать, молиться, говорить с другом, выражать свои мысли, выслушивать идеи других, наслаждаться музыкой, видеть прекрасный пейзаж и прогуливаться по пляжу...</p>
+            <p>Читать — это как думать, молиться, говорить с другом, выражать свои мысли, выслушивать идеи других,
+                наслаждаться музыкой, видеть прекрасный пейзаж и прогуливаться по пляжу...</p>
             <footer>— <cite>Роберто Боланьо</cite></footer>
         </blockquote>
     </div>

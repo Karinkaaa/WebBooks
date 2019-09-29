@@ -3,7 +3,7 @@
 <%@ include file="../common/lib.jsp" %>
 <html>
 <head>
-    <title>Main</title>
+    <title>ApplicationDemo</title>
     <style>
         body {
             background-image: url("https://img3.goodfon.ru/original/2628x1800/9/75/priroda-peyzazh-osen-doroga-3087.jpg");
