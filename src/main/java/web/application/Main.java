@@ -1,12 +1,12 @@
 package web.application;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import web.components.BookDAOImpl;
 import web.connect.ConnectionToDB;
 import web.dao.DAO;
 import web.entities.Author;
 import web.entities.Book;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.List;
